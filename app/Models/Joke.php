@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Joke extends Model
 {
     use HasFactory;
+
     // get rates from rates table
     public function rates()
     {
@@ -16,6 +17,7 @@ class Joke extends Model
     // for save data
     public function saveJoke($joke)
     {
+        // add rates
         $data = new Rate();
         $data->joke_id = $joke['id'];
         $data->joke = $joke['joke'];
@@ -26,11 +28,11 @@ class Joke extends Model
     public function getRate()
     {
         // get jokes with
-        $jokes = Joke::with('rates')->orderBy('average_rate','desc')->get();
+        $jokes = Joke::with('rates')->orderBy('average_rate', 'desc')->get();
 
         // Calculate average ratings
         foreach ($jokes as $joke) {
-            $joke->average_rating = $this->calculateAverage( $joke->rates);
+            $joke->average_rating = $this->calculateAverage($joke->rates);
             $joke->rating_count = $joke->rates()->count();
         }
         // Sort jokes by average rating
@@ -39,12 +41,14 @@ class Joke extends Model
         return $jokes;
     }
 
-    // validation
+    // calculate average rates
     public function calculateAverage($rates)
     {
         // Extract ratings from the collection
         $ratingValues = $rates->pluck('rate')->toArray();
+        $ratingValues = count($ratingValues) ? array_sum($ratingValues) / count($ratingValues) : 0;
 
-        return count($ratingValues) ? array_sum($ratingValues) / count($ratingValues) : 0;
+        // return two digits float rates
+        return number_format($ratingValues, 2);
     }
 }

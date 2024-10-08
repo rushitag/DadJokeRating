@@ -47,6 +47,7 @@ class JokeController extends Controller
 
         // find joke by id
         $joke = Joke::with('rates')->find($request->id);
+
         // save average
         $joke->average_rate = (new Joke())->calculateAverage($joke->rates);
         $joke->total_rates = $joke->rates()->count();
@@ -54,12 +55,5 @@ class JokeController extends Controller
 
         // redirect
         return redirect()->route('get.joke');
-    }
-    private function calculateAverage($rates)
-    {
-        // Extract ratings from the collection
-        $ratingValues = $rates->pluck('rate')->toArray();
-
-        return count($ratingValues) ? array_sum($ratingValues) / count($ratingValues) : 0;
     }
 }

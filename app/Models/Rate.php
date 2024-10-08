@@ -16,7 +16,9 @@ class Rate extends Model
     }
 
     // save rate
-    public function saveRate($request){
+    public function saveRate($request)
+    {
+        // set rates
         $rate = (new Rate());
         $rate->joke_id = $request->id;
         $rate->rate = $request->rate;

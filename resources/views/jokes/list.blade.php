@@ -12,22 +12,20 @@
     @if (count($data) > 0)
         <table border="1" align="center">
             <tr>
-                <td colspan="3">best_joke:{{ $best_joke ? $best_joke->average_rate : 0 }}</td>
-                <td colspan="2">worst_joke:{{ $worst_joke ? $worst_joke->average_rate : 0 }}</td>
+                <td colspan="3"><b>Best Joke : </b>{{ $best_joke ? $best_joke->average_rate : 0 }}</td>
+                <td colspan="2"><b>Worst Joke : </b>{{ $worst_joke ? $worst_joke->average_rate : 0 }}</td>
             </tr>
-
-
             <tr>
-                <td>joke</td>
-                <td>Average rate</td>
-                <td>Total rates</td>
-                <td>Add Rates</td>
-                <td>Action</td>
+                <th>Joke</th>
+                <th>Average rate</th>
+                <th>Total rates</th>
+                <th>Add Rates</th>
+                <th>Action</th>
             </tr>
             @foreach ($data as $joke)
                 <form action="{{ route('save.joke') }}" method="POST">
                     @csrf
-                    <tr>
+                    <tr align="center">
                         <td>{{ $joke->joke }}</td>
                         <td>{{ $joke->average_rate }}</td>
                         <td>{{ $joke->total_rates }}</td>
