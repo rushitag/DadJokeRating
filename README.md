@@ -16,6 +16,10 @@ composer update
 
 php artisan migrate
 
+<!-- generate key -->
+
+php artisan key:generate
+
 <!-- run this commands for import jokes in database -->
 
 php artisan app:import-jokes
